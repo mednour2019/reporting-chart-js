@@ -1,0 +1,88 @@
+.border-0{
+  font-size: smaller;
+}
+.rounded-listKpiCalc{
+  width: 200px;
+  }
+  .notif-inf{
+    background-color: #dcd9f5;
+  }
+  .adv-rep{
+    font-size: smaller !important;
+    width: 40% !important;
+  }
+.label-level{
+  white-space: nowrap;
+}
+.ic-grid{
+  font-size: smaller;
+}
+.saveBtn{
+  right:7px;
+}
+.display-add{
+  display: contents;
+}
+.report-name{
+ /*height: 20px;*/
+ /* font-size: small !important;*/
+ width: 300px;
+}
+.spinner-data{
+  width: 20px !important;
+  height: 20px !important;
+}
+.spinner-text{
+  font-size: large !important;
+}
+
+#SummaryReport{
+  display: contents;
+}
+#treeview-summary-col,#treeview-summary-row,#treeview-summary-filter,#inter-report {
+  overflow-y: scroll;
+  border: 1px solid #bbdceb;
+  border-radius: 5px;
+  height: 150px;
+  width: 300px;
+}
+
+.rounded-summary-list-kpi{
+  width: 250px;
+
+}
+.rounded-summary-tree-view-column-val{
+  width: 300px;
+}
+
+#dialog-options-charts{
+  display: contents;
+}
+.exp-pdf{
+  font-size: small !important;
+  width: 140px;
+}
+.select-All{
+  position: relative;
+  font-size: initial;
+  border: 1px #1e1d1d solid;
+  border-radius: 3px;
+  border-color: aliceblue;
+  cursor: pointer;
+}
+.select-All:hover {
+ /* color: #daecf4;*/ /* Text color on hover */
+  background-color: #93c8df; /* Background color on hover */
+}
+.interpReport{
+  width: 500px;
+  height: 250px;
+}
+#interp-report{
+  width: 480px;
+  height: 200px;
+}
+.cal-name{
+  width: 350px;
+}
+

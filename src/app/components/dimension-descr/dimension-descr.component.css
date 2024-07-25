@@ -1,0 +1,29 @@
+.area{
+  width: 450px;
+  height: 120px;
+}
+.display-add{
+  display: contents;
+}
+.example-full-width{ width: 500px;
+  height: 130px;
+}
+.spin-cube{
+  white-space: nowrap;
+}
+
+.interpDim{
+  width: 500px;
+  height: 250px;
+}
+#interp-Dim{
+  width: 480px;
+  height: 200px;
+}
+.dim-name{
+  width: 350px;
+}
+.dis-data{
+  font-size: medium;
+  width: 200px ;
+}

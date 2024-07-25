@@ -1,0 +1,23 @@
+.display-add{
+  display: contents;
+}
+.example-full-width{
+  width: 500px;
+  height: 200px;
+}
+#idt{
+  width: 480px;
+  height: 150px;
+}
+
+.interpCube{
+  width: 500px;
+  height: 250px;
+}
+#interp-Cube{
+  width: 480px;
+  height: 200px;
+}
+.cube-name{
+  width: 350px;
+}

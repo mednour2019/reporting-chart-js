@@ -1,0 +1,57 @@
+
+
+.spinner-text {
+  display: contents;
+  align-items: center;
+  justify-content: center;
+}
+
+.spinner-text span {
+  margin-left: 10px; /* Add space between the spinner and message */
+}
+#dropdownListSqlServer{
+  width: 20%;
+}
+
+.grey-button {
+  background-color: silver; /* Set the background color to grey */
+  color: white; /* Set the text color to white or any other suitable color */
+  display: flex; /* Use flexbox to control content alignment */
+  justify-content: space-between; /* Space evenly between content */
+}
+
+.spinnerCube {
+  place-items: center;
+  display: flex;
+  height: 90%;
+  position: absolute;
+  left: 0;
+}
+.olap-label{
+  position: absolute;
+    top: 18%;
+}
+.spinner-text {
+  white-space: nowrap; /* Prevent text from wrapping to a new line */
+}
+
+.spinner-text span {
+  display: inline; /* Display the span as an inline element */
+}
+.olapCubeBtn{
+  background-color: silver; /* Set the background color to grey */
+  color: white; /* Set the text color to white or any other suitable color */
+}
+.button-container{
+  display: flex;
+    justify-content: space-around;
+}
+.rounded{
+  width: 80%;
+  }
+  .border-0{
+    font-size: smaller;
+  }
+ /* #dialog{
+    display: contents;
+  }*/

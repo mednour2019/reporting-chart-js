@@ -1,0 +1,338 @@
+<!-- Main content -->
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">
+          {{lblCardTitle}}
+        </h3>
+
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="">
+            <i class="fas fa-smile"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <mat-stepper
+          [linear]="isLinear"
+          #stepper
+          (selectionChange)="onStepSelectionChange($event)"
+        >
+          <mat-step [stepControl]="firstFormGroup">
+            <form [formGroup]="firstFormGroup" id="formServInsId">
+              <ng-template matStepLabel>
+                <!--Choose Server-->
+                <div>{{lblWizardServer}}</div>
+              </ng-template>
+              <mat-label>
+                {{lblDropdownServer}} <i class="fas fa-server"></i>
+              </mat-label>
+              <br />
+
+              <select
+                id="dropdownListSqlServer"
+                name="serverInstance"
+                [attr.data-val]="true"
+                [attr.data-val-requiredDropdown]="msgError"
+              ></select>
+              <span class="k-invalid-msg" data-for="serverInstance"></span>
+
+              <div *ngIf="loadingServer" class="spinner-text">
+                <div class="spinner-border spinner-border-sm"></div>
+                <span>{{ lblLoadingServer}}</span>
+              </div>
+              <div>
+                <br>
+                <br />
+                <button
+                  mat-button
+                  matStepperNext
+                  (click)="getOlapCubesName()"
+                  class="btn btn-secondary btn-sm grey-button"
+                >
+                {{lblButtonNext}}
+                  <mat-icon>keyboard_arrow_right </mat-icon>
+                </button>
+              </div>
+            </form>
+          </mat-step>
+          <!--  label="Choose Data Source"-->
+          <mat-step [stepControl]="secondFormGroup">
+            <ng-template matStepLabel>
+              <div>
+                <!--(click)="getOlapCubesName()"-->
+                {{lblWizardOlapCube}}
+              </div>
+            </ng-template>
+            <form [formGroup]="secondFormGroup" id="formOlapCubeId">
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm"></div>
+                  <div class="col-sm">
+                    <div class="input-group rounded">
+                      <input
+                        type="search"
+                        class="form-control rounded"
+                        aria-label="Search"
+                        aria-describedby="search-addon"
+                        [ngModelOptions]="{ standalone: true }"
+                        [(ngModel)]="filterTextOlapCube"
+                        (input)="applyFilterOlapCube()"
+                        placeholder={{placeHolderFilter}}
+                      />
+                      <span class="input-group-text border-0" id="search-addon">
+                        <i class="fas fa-search"></i>
+                      </span>
+                    </div>
+
+                    <br />
+
+                    <div class="form-group">
+                      <mat-label class="olap-label"
+                        >{{lblListBoxOlapCube}}
+                        <i class="fas fa-database"></i>
+                      </mat-label>
+                      <br />
+                      <select
+                        id="listBoxOlapCube"
+                        name="listBoxOlapCube"
+                      ></select>
+                    </div>
+                  </div>
+                  <div class="col-sm">
+                    <div *ngIf="loadingOlapCubeName" class="spinner-text spinnerCube">
+                      <div class="spinner-border spinner-border-sm"></div>
+                      <span>{{lblLoadingOlapCube}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3"></div>
+                  <div class="col-sm-3">
+                    <div class="button-container">
+                      <button
+                        mat-button
+                        matStepperPrevious
+                        class="btn btn-secondary btn-sm olapCubeBtn"
+                        (click)="disableLineair()"
+                      >
+                      {{lblButtonBack}}
+                        <mat-icon>keyboard_arrow_left</mat-icon>
+                      </button>
+                      <button
+                        mat-button
+                        matStepperNext
+                        (click)="getMeasDimCalc()"
+                        class="btn btn-secondary btn-sm olapCubeBtn"
+                      >
+                      {{lblButtonNext}}
+                        <mat-icon>keyboard_arrow_right</mat-icon>
+                      </button>
+                    </div>
+                    <div class="col-sm-6"></div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>
+              <div>
+                <!--(click)="getMeasDimCalc()"-->
+                {{lblWizardKPI}}
+              </div>
+            </ng-template>
+            <div class="container">
+              <div class="row">
+                <div class="col-sm">
+                  <app-generic-checkboxgroup
+                    [listMeasDimCalc]="listMeasures"
+                    [filteredListMeasDimCal]="filteredMeasuresCheckBoxGroup"
+                    [attributeMeasDimCalClass]="attributeMeasureClass"
+                    [labelItemMeasDimCalcShowing]="labelItemMeasureShowing"
+                    (selectedCountChange)="selectedMeasureCount = $event"
+                    (checkedMeasDimCalcSender)="checkedItemsMeas = $event"
+                    [iconLabel]="iconMeasure"
+
+                  >
+
+                </app-generic-checkboxgroup>
+
+                  <br />
+                  <span
+                    *ngIf="controlValidationMeasure"
+                    class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+                    data-for="kpiMeasure"
+                    role="alert"
+                  >
+                    <span class="k-icon k-i-warning"> </span>
+                    {{ messageErrorValidationMeasure }}
+                  </span>
+                </div>
+                <div class="col-sm">
+                  <app-generic-checkboxgroup
+                    [listMeasDimCalc]="listDimensions"
+                    [filteredListMeasDimCal]="filteredDimensionsCheckBoxGroup"
+                    [attributeMeasDimCalClass]="attributeDimensionClass"
+                    [labelItemMeasDimCalcShowing]="labelItemDimensionShowing"
+                    (selectedCountChange)="selectedDimensionCount = $event"
+                    (checkedMeasDimCalcSender)="checkedItemsDim = $event"
+                    [iconLabel]="iconDimension"
+                  ></app-generic-checkboxgroup>
+                  <br />
+                  <span
+                    *ngIf="controlValidationDimension"
+                    class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+                    data-for="kpiDimension"
+                    role="alert"
+                  >
+                    <span class="k-icon k-i-warning"> </span>
+                    {{ messageErrorValidationDimension }}
+                  </span>
+                </div>
+                <div class="col-sm">
+                  <app-generic-checkboxgroup
+                    [listMeasDimCalc]="listCalculations"
+                    [filteredListMeasDimCal]="filteredCalculationsCheckBoxGroup"
+                    [attributeMeasDimCalClass]="attributeCalculationClass"
+                    [labelItemMeasDimCalcShowing]="labelItemCalculationShowing"
+                    (selectedCountChange)="selectedCalculCount = $event"
+                    (checkedMeasDimCalcSender)="checkedItemsCalc = $event"
+                    [iconLabel]="iconCalculation"
+                  ></app-generic-checkboxgroup>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-sm">
+                  <span
+                    *ngIf="controlValidationPreviousSteps"
+                    class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+                    data-for="kpiPreviousSteps"
+                    role="alert"
+                  >
+                    <span class="k-icon k-i-warning"> </span>
+                    {{ messageErrorValidationPrevSteps }}
+                  </span>
+                </div>
+                <div class="col-sm">
+                  <br />
+                  <div *ngIf="loadingKPICal" class="spinner-text">
+                    <div class="spinner-border spinner-border-sm"></div>
+                    <span> {{lblLoadingKPICalc}}</span>
+                  </div>
+                  <br />
+
+                  <div class="button-container">
+                    <button
+                      class="btn btn-secondary btn-sm olapCubeBtn"
+                      mat-button
+                      matStepperPrevious
+                      (click)="disableLineair()"
+                    >
+                    {{lblButtonBack}}
+                      <mat-icon>keyboard_arrow_left</mat-icon>
+                    </button>
+                    <button
+                      class="btn btn-secondary btn-sm olapCubeBtn"
+                      mat-button
+                      (click)="stepper.reset()"
+                      (click)="disableLineair()"
+                    >
+                    {{lblButtonReset}}
+                      <mat-icon>refresh</mat-icon>
+                    </button>
+                    <button
+                      class="btn btn-secondary btn-sm olapCubeBtn"
+                      mat-button
+                      (click)="goToSmartConfigGrid()"
+                    >
+                    {{lblButtonDone}}
+                      <mat-icon>check_circle</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-sm"></div>
+              </div>
+            </div>
+          </mat-step>
+        </mat-stepper>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        {{footerTitlaCard}}
+      </div>
+    </div>
+    <!-- /.card -->
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<div id="dialog-summu" class="nour">
+  <br>
+  <h2>{{confirmDialogTitle}}</h2>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <p>{{dialogLabelDimension}}</p>
+        <ul>
+          <li *ngFor="let item of checkedItemsDim">{{ item.dimensionName }}</li>
+        </ul>
+      </div>
+      <div class="col">
+        <p *ngIf="checkedItemsMeas.length!=0">{{dialogLabelKpi}}</p>
+        <ul>
+          <li *ngFor="let item of checkedItemsMeas">{{ item.measureName }}</li>
+        </ul>
+      </div>
+      <div class="col">
+        <p *ngIf="checkedItemsCalc.length!=0">{{dialogLabelCalc}}</p>
+        <ul>
+          <li *ngFor="let item of checkedItemsCalc">{{ item.calculationName}}</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+  <div
+    class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+    role="toolbar"
+  >
+
+    <button
+      id="addButton"
+      (click)="redirectConfig()"
+      class="k-button k-primary saveBtn"
+      tabindex="0"
+    >
+    {{ this.oKButtonText}}
+      <i class="fas fa-check"></i>
+    </button>
+    <button
+      id="cancelButton"
+      (click)="cancelDialog('dialog-summu')"
+      class="k-button"
+      tabindex="0"
+    >
+    {{ this.CancelButtonText}}
+
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+
+<!-- /.content -->

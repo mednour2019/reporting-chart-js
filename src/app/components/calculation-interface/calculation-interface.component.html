@@ -1,0 +1,269 @@
+<!-- Main content -->
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">Formula(s) KPI</h3>
+
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="">
+            <i class="fas fa-smile"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body" id="calculation-card-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+                <div class="form-group">
+                  <mat-label>
+                    {{ lblDropdownServer }} <i class="fas fa-server"></i>
+                  </mat-label>
+                  <br />
+                  <select id="dropCalc" name="dropCalc"></select>
+                </div>
+                <br />
+                <app-alert-spinner [loadingSpinner]="loadingServer" [lblLoadingText]="lblLoadingServer">
+                </app-alert-spinner>
+              <app-alert-error [ctrlValidDisplay]="controlValidationServerSelected" [msgErrValid]=" messageErrorValidationServerSelected"
+              [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+            </div>
+            <div class="col-sm">
+              <app-input-filter [filterInput]="filterListBoxOlapCube" [compId]="'listCalc'"
+              [compType]="'kendoListBox'" [fieldText]="'cubeName'"
+              [labelText]="lblListBoxOlapCubeData" [widthSearchInput]="'300px'"
+              [classIconLabel]="'fas fa-database'"></app-input-filter>
+                <br />
+                <app-alert-spinner [loadingSpinner]="loadingOlapCubeName" [lblLoadingText]="lblLoadingOlapCube" [fontSize]="'meduim'" class="alert-spinner">
+                 </app-alert-spinner>
+
+                <app-alert-error [ctrlValidDisplay]="controlValidationCubeSelected"
+                [msgErrValid]=" messageErrorValidationCubeSelected "
+                [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+
+            </div>
+            <div class="col-sm">
+              <br /><br /><br /><br /><br /><br /><br />
+              <div class="form-btn">
+                <button
+                  (click)="showCalculationGrid()"
+                  class="btn btn-block bg-gradient-secondary btn-xs adv-rep"
+                >
+                  <i class="fa-solid fa-display"></i>
+                  {{ btnDisplayCalc }}
+                </button>
+              </div>
+              <br />
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer"></div>
+    </div>
+    <!-- /.card -->
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<div class="row">
+  <div class="col"></div>
+  <div class="col">
+    <app-alert-spinner [loadingSpinner]="loadingOlapGridCalc" [lblLoadingText]="lblLoadingGridCalc" [fontSize]="'large'" class="alert-spinner">
+    </app-alert-spinner>
+  </div>
+  <div class="col"></div>
+</div>
+
+<!-- /.content    [style.display]="isDialogVisible ? 'contents' : 'none'"    -->
+<div id="grid"></div>
+<div id="addDialog" class="display-add">
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+          <mat-form-field class="cal-name">
+            <mat-label class="labelFormulas">Formula(s) Name</mat-label>
+            <input
+              matInput
+              placeholder="Make Formula Name explicative..."
+              [(ngModel)]="formulaNameInput"
+              class="inputFormulas"
+              [readonly]="!this.isModeAdd ? true : null"
+            />
+          </mat-form-field>
+            <span   *ngIf="ctrlValdFormuName"
+            class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+            data-for="kpiPreviousSteps"
+            role="alert"
+          >
+            <span class="k-icon k-i-warning"> </span>
+            {{  msgErrorValdFormName }}
+          </span>
+      </div>
+      <div class="col">
+          <mat-label class="olap-label"> Kpi1 </mat-label> <span><b> {{nbKpi}}</b></span>
+          <br />
+          <div class="form-group">
+            <select id="dropDownKpi1" name="dropDownKpi1"></select>
+          </div>
+          <br>
+          <span  *ngIf=" ctrlValdKpi1"
+          class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+          data-for="kpiPreviousSteps"
+          role="alert"
+        >
+          <span class="k-icon k-i-warning"> </span>
+          {{  msgErrorValdKpi1 }}
+        </span>
+        </div>
+
+
+    </div>
+    <div class="row">
+      <div class="col">
+          <mat-label class="olap-label"> Operations </mat-label>
+          <br />
+          <br />
+          <div class="form-group-radio-group">
+            <mat-radio-group
+              aria-label="Select an option"
+              [(ngModel)]="selectedValueRadioBtn"
+              (change)="onRadioChange($event)"
+              color="primary"
+            >
+              <mat-radio-button class="custom-radio" value="1"
+                >Op+</mat-radio-button
+              >
+              <mat-radio-button class="custom-radio" value="2"
+                >Op-</mat-radio-button
+              >
+              <mat-radio-button class="custom-radio" value="3"
+                >Op*</mat-radio-button
+              >
+              <mat-radio-button class="custom-radio" value="4"
+                >Op/</mat-radio-button
+              >
+            </mat-radio-group>
+          </div>
+          <br />
+          <span  *ngIf="ctrlValdOp"
+
+          class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+          data-for="kpiPreviousSteps"
+          role="alert"
+        >
+          <span class="k-icon k-i-warning"> </span>
+          {{   msgErrorValdOp }}
+        </span>
+      </div>
+
+      <div class="col">
+          <mat-label class="olap-label"> Kpi2 </mat-label><span><b> {{nbKpi}}</b></span>
+          <br />
+          <div class="form-group">
+            <select id="dropDownKpi2" name="dropDownKpi2"></select>
+          </div>
+          <br>
+          <span  *ngIf="ctrlValdKPi2"
+          class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+          data-for="kpiPreviousSteps"
+          role="alert">
+          <span class="k-icon k-i-warning"> </span>
+          {{   msgErrorValdKpi2 }}
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+          <mat-label class="olap-label"> Formula Form </mat-label>
+          <br />
+          <div class="form-group">
+            <select id="formatString" name="formatString"></select>
+          </div>
+          <br>
+          <span  *ngIf="ctrlValdFormString"
+          class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+          data-for="kpiPreviousSteps"
+          role="alert">
+          <span class="k-icon k-i-warning"> </span>
+          {{  msgErrorValdFormString }}
+        </span>
+      </div>
+      <div class="col">
+        <mat-form-field class="interpcalc">
+          <mat-label>formula(s) Description</mat-label>
+          <textarea matInput placeholder="Group Desc..."
+          [(ngModel)]="calcDescription"
+            class="inputGroup"
+            id="interp-calc"
+          ></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+    <br />
+    <br />
+    <div
+      class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+      role="toolbar"
+    >
+      <button
+        id="addButton"
+        (click)="saveRecord()"
+        class="k-button k-primary saveBtn"
+        tabindex="0"
+      >
+        Save
+        <i class="fas fa-check"></i>
+      </button>
+      <button
+        id="cancelButton"
+        (click)="cancelDialog('addDialog')"
+        class="k-button"
+        tabindex="0"
+      >
+        Cancel
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Delete Confirmation Dialog -->
+<div id="deleteDialog">
+    <h2>{{confirmDel}}</h2>
+    <p>{{sureDel}}</p>
+    <br>
+    <div
+    class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+    role="toolbar"
+  >
+    <button id="confirmDeleteButton"  class="k-button k-primary saveBtn"
+     tabindex="0"  (click)="removeRecord()"> Delete   <i class="fas fa-trash"></i></button>
+    <button id="cancelDeleteButton"   class="k-button" tabindex="0" (click)="cancelDialog('deleteDialog')">
+      Cancel  <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+<div #myDivElement  class="action-btn-grid">
+  <button class='k-button k-grid-edit btn-grid'> <i class='fa fa-edit ic-grid' aria-hidden='true'> </i> &nbsp; Edit</button>
+  <button class='k-button k-grid-remove btn-grid'><i class='fa fa-trash ic-grid' aria-hidden='true'> </i>&nbsp; Remove</button>
+</div>
+
+<div #addItem  class="action-btn-grid">
+  <button class='k-button k-grid-add'> <i class='fa fa-plus ic-grid' aria-hidden='true'> </i>  &nbsp; Add </button>
+</div>
+<div #processItem  class="action-btn-grid">
+  <button class='k-button k-grid-process btn-process'> <i class='fa fa-cogs ic-grid' aria-hidden='true'> </i>  &nbsp;Process Data </button>
+</div>

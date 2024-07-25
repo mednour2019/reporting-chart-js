@@ -1,0 +1,69 @@
+.labelFormulas{
+  font-size: small;
+
+}
+.inputFormulas{
+  height: 20px;
+  font-size: small !important;
+}
+.form-group-radio-group{
+  border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    border-color: #bbdceb;
+    border-radius: 2px;
+    width: 350px;
+}
+.display-add{
+  display: contents;
+}
+.saveBtn{
+  right:7px;
+}
+.rounded{
+  width:200px;
+  }
+  .adv-rep{
+    font-size: smaller !important;
+    width: 50% !important;
+  }
+  .border-0{
+    font-size: smaller;
+  }
+.grid-cal{
+  margin-left: 300px;
+}
+/*.btn-process{
+  left: 15px;
+}*/
+/*.ic-grid{
+ font-size: smaller;
+}*/
+/*.btn-grid{
+  font-size: smaller;
+  height: 20px;
+}*/
+.k-grid-pdf{
+  left: 20px ;
+}
+
+.action-btn-grid{
+  display: none;
+}
+.alert-spinner{
+  white-space: nowrap;
+}
+.cal-name{
+  width: 350px;
+}
+#interp-calc{
+  width: 480px;
+  height: 200px;
+}
+.interpcalc{
+  width: 500px;
+  height: 250px;
+}
+.k-grid-excel{
+  left: 40px ;
+}

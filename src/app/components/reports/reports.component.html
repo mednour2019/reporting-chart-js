@@ -1,0 +1,145 @@
+<section class="content">
+  <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">Reports</h3>
+
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="">
+            <i class="fas fa-smile"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body" id="reports-card-body">
+        <app-date-filter-period [startDate]="startDate" [endDate]="endDate" [idDatePickerStartDate]="'date-pick-start-rep'"
+        [idDatePickerEndDate]="'date-pick-end-rep'" [idBtn]="'btn-di-rep'"> </app-date-filter-period>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer"></div>
+    </div>
+    <!-- /.card -->
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+      <app-alert-spinner [loadingSpinner]="loadingGridReports" [lblLoadingText]="lblloadingGrid" [fontSize]="'large'">
+      </app-alert-spinner>
+    </div>
+    <div class="col"></div>
+
+  </div>
+</div>
+
+<div id="gridReports"></div>
+<!-- Delete Confirmation Dialog -->
+<div id="deleteDialogReport" class="display-add">
+  <br>
+  <h2>{{confirmDel}}</h2>
+  <p>{{sureDel}}</p>
+  <br>
+  <div
+  class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+  role="toolbar"
+>
+  <button id="confirmDeleteButton"  class="k-button k-primary saveBtn"
+   tabindex="0"  (click)="removeRecord()"> Delete   <i class="fas fa-trash"></i></button>
+  <button id="cancelDeleteButton"   class="k-button" tabindex="0" (click)="cancelDialog('deleteDialogReport')">
+    Cancel  <i class="fas fa-times"></i>
+  </button>
+</div>
+</div>
+
+<div id="updateRportDialog" class="display-add">
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="report-name">
+          <mat-label class="labelFormulas">Report Name</mat-label>
+          <input
+            matInput
+            placeholder="Make Report Name explicative..."
+            [(ngModel)]="reportNameInput"
+            class="inputReport"
+          />
+        </mat-form-field>
+      <app-alert-error [ctrlValidDisplay]="ctrlValdRepName" [msgErrValid]="msgErrorValdRepName"
+      [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+      </div>
+      <div class="col">
+        <mat-form-field class="interpReport">
+          <mat-label>Report Interpretation</mat-label>
+          <textarea matInput placeholder="Interp Rep..."
+          [(ngModel)]="reportInterpInput"
+            class="interp-report"
+            id="interp-report"
+          ></textarea>
+        </mat-form-field>
+      <app-alert-error [ctrlValidDisplay]="ctrlValdRepInterp" [msgErrValid]=" msgErrorValdRepInterp"
+      [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <mat-slide-toggle [(ngModel)]="isShareable"  color="primary">Sharebale Report</mat-slide-toggle>
+
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div
+  class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+  role="toolbar"
+>
+  <button id="confirmSaveReport"  class="k-button k-primary saveBtn"
+  tabindex="0"  (click)="UpdateReport()">  Save   <i class="fas fa-trash"></i></button>
+  <button id="cancelSaveReport"   class="k-button" tabindex="0" (click)="cancelDialog('updateRportDialog')">
+    Cancel  <i class="fas fa-times"></i>
+  </button>
+</div>
+</div>
+<div id="viewReportDialog" class="display-add">
+  <br>
+  <h2>{{confirmView}}</h2>
+  <p>{{sureView}}</p>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <div
+  class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+  role="toolbar"
+>
+  <button id="confirmViewButton"  class="k-button k-primary saveBtn"
+   tabindex="0"  (click)="ViewReport()"> View Report   <i class="fas fa-eye"></i></button>
+  <button id="cancelDeleteButton"   class="k-button" tabindex="0" (click)="cancelDialog('viewReportDialog')">
+    Cancel  <i class="fas fa-times"></i>
+  </button>
+</div>
+</div>
+
+<div #myDivElement  class="action-btn-grid">
+  <button class='k-button k-grid-edit btn-grid'> <i class='fa fa-edit ic-grid' aria-hidden='true'> </i> &nbsp; Edit</button>
+<button class='k-button k-grid-remove btn-grid'><i class='fa fa-trash ic-grid' aria-hidden='true'> </i>&nbsp; Remove</button>
+<button class='k-button k-grid-view btn-grid'> <i class='fa fa-eye ic-grid' aria-hidden='true'> </i> &nbsp; View</button>
+</div>

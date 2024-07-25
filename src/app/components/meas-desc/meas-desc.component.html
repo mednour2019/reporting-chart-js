@@ -1,0 +1,114 @@
+<section class="content">
+  <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">Kpi description</h3>
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="">
+            <i class="fas fa-smile"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body" id="meas-card-body">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <app-input-filter [filterInput]="filterListBoxCubeMeas" [compId]="'listBMataMart'"
+              [compType]="'kendoListBox'" [fieldText]="'cubeName'"
+              [labelText]="lblDropdownCube" [widthSearchInput]="'300px'"
+              [classIconLabel]="'fas fa-database'"></app-input-filter>
+            </div>
+
+            <div class="col">
+
+              <button (click)="displayMeasure()" class="btn btn-block btn-secondary dis-data">
+                Display Kpi
+             </button>
+             <br>
+             <br>
+             <br>
+             <br>
+             <app-alert-error [ctrlValidDisplay]="controlValidationServerSelected2" [msgErrValid]=" messageErrorValidationServerSelected2"
+             [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer"></div>
+    </div>
+    <!-- /.card -->
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<br>
+<div id="gridmeas-Desc"></div>
+
+<div id="updateDialogMeas" class="display-add">
+  <br>
+  <div class="container">
+   <div class="row">
+    <div class="col">
+    <div class="col">
+      <mat-form-field class="nameKpi">
+        <mat-label class="labelFormulas">Kpi Name</mat-label>
+        <input
+          matInput
+          placeholder="Make kpi NAme explicative..."
+          [(ngModel)]="MeasName"
+          [readonly]="true"
+        />
+      </mat-form-field>
+    </div>
+      <mat-form-field class="interpKpi">
+        <mat-label>Kpi Description</mat-label>
+        <textarea matInput placeholder="Kpi Desc..."
+        [(ngModel)]="MeasDescription"
+          class="inputGroup"
+          id="interp-Kpi"
+        ></textarea>
+      </mat-form-field>
+   </div>
+   <div class="col-8">
+    <app-alert-spinner [loadingSpinner]="loadingSaveMeasDesc" [lblLoadingText]="lblLoadingSaveDesMes " [fontSize]="'meduim'">
+    </app-alert-spinner>
+   </div>
+  </div>
+    <br />
+    <br />
+    <div
+      class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+      role="toolbar"
+    >
+      <button
+        id="addButton"
+        (click)="updateRecord()"
+        class="k-button k-primary saveBtn"
+        tabindex="0"
+      >
+        Save
+        <i class="fas fa-check"></i>
+      </button>
+      <button
+        id="cancelButton"
+        (click)="cancelDialog('updateDialogMeas')"
+        class="k-button"
+        tabindex="0"
+      >
+        Cancel
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+</div>

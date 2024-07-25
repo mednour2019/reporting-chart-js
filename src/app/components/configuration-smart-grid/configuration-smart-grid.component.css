@@ -1,0 +1,125 @@
+
+
+.myTree {
+  overflow-y: scroll;
+  border: 1px solid #bbdceb;
+  border-radius: 5px;
+  height: 200px;
+  width: 300px;
+  color: black;
+}
+
+
+.rounded-listKpiCalc{
+  width: 200px;
+  }
+  .rounded-treeview{
+    width: 300px;
+  }
+  .border-0{
+    font-size: smaller;
+  }
+.form-group-treeview{
+  border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    border-color: #bbdceb;
+    overflow-y: scroll;
+    height: 200px;
+    width: 300px;
+    border-radius: 2px;
+}
+.tree-view-trash-icon{
+  width: 30px;
+  height: 30px;
+  background-color: #6c757d;
+  right: 4px;
+
+}
+
+.grey-button {
+  background-color: silver; /* Set the background color to grey */
+  color: white; /* Set the text color to white or any other suitable color */
+  display: flex; /* Use flexbox to control content alignment */
+  justify-content: space-between; /* Space evenly between content */
+}
+
+.toolbox-container {
+  display: flex; /* Display children side by side */
+}
+.lbl-filter{
+  padding-left: 30px;
+}
+.notif-inf{
+  background-color: #dcd9f5;
+}
+.pagi-list-col{
+  background-color: aliceblue;
+  width: 500px;
+}
+.rounded-listFiltered-Colum{
+  width: 250px;
+
+}
+.rounded-listFiltered-Filter-Items{
+  width: 300px;
+
+}
+.remove-All{
+  position: relative;
+  font-size: initial;
+  border: 1px #1e1d1d solid;
+  border-radius: 3px;
+  border-color: aliceblue;
+  cursor: pointer;
+}
+.remove-All:hover {
+ color:black ;
+  background-color: rgba(0, 0, 255, 0.027);
+}
+.transfert-item{
+  position: relative;
+  bottom: 60px;
+  right: 30px;
+  border-radius: 1px;
+  background-color: #daecf4;
+  border-color: #93c8df;
+  color: #003f59;
+  width: 30px;
+  height: 25px;
+  border: 1px #93c8df solid;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.transfert-item:hover {
+  color: #daecf4; /* Text color on hover */
+  background-color: #93c8df; /* Background color on hover */
+}
+
+.all-items{
+  background-color: aliceblue;
+  width: 300px;
+  height: 55px;
+}
+.saveBtn{
+  right:7px;
+}
+#dialog-filter-column,#dialog-filter-items{
+  display: contents;
+}
+
+
+.checkbox-list-container {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 250px; /* Set the desired height for the list */
+  overflow-y: auto; /* Enable vertical scroll bar */
+  width: 250px;
+}
+
+.checkbox-list {
+  padding: 10px;
+}
+.custom-filter{
+  font-size: smaller;
+}

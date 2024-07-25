@@ -1,0 +1,569 @@
+<!--<div id="treeviewExample"></div>
+<button (click)="this.removeExample()">remove</button>-->
+
+<!--
+<mat-form-field>
+<input matInput [matDatepicker]="startDatePicker" placeholder="Start Date" [(ngModel)]="startDate">
+<mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+<mat-datepicker #startDatePicker></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field>
+<input matInput [matDatepicker]="endDatePicker" placeholder="End Date" [(ngModel)]="endDate">
+<mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+<mat-datepicker #endDatePicker></mat-datepicker>
+</mat-form-field>-->
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">
+          {{ cardTitle }}
+        </h3>
+
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="">
+            <i class="fas fa-smile"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <div *ngIf="loadingKpi" class="spinner-text">
+                <div class="spinner-border spinner-border-sm"></div>
+                <span> {{ loadingKpiMsg }}</span>
+              </div>
+              <div class="input-group rounded-listKpiCalc">
+                <input
+                  type="search"
+                  class="form-control rounded"
+                  aria-label="Search"
+                  aria-describedby="search-addon"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="filterListBoxKpi"
+                  (input)="
+                    applyFilterComponent(
+                      'listMeasCalChecked',
+                      'kendoListBox',
+                      filterListBoxKpi
+                    )
+                  "
+                  placeholder="{{ filterInputPlaceHolder }}"
+                />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+              <br />
+
+              <mat-label
+                >{{ labelKPI }}
+                <i class="fas fa-signal"></i>
+                <span>
+                  {{
+                    olapCubeChoosen.olapCubeMeasures.length +
+                      olapCubeChoosen.olapCubeCalculations.length
+                  }}</span
+                >
+              </mat-label>
+              <br />
+              <div class="form-group">
+                <div id="listMeasCalChecked"></div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div *ngIf="loadingGroup" class="spinner-text">
+                <div class="spinner-border spinner-border-sm"></div>
+                <span>{{ loadingGroupMsg }}</span>
+              </div>
+              <div class="input-group rounded-treeview">
+                <input
+                  type="search"
+                  class="form-control rounded"
+                  aria-label="Search"
+                  aria-describedby="search-addon"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="filterTreeView"
+                  (input)="
+                    applyFilterComponent(
+                      'treeview',
+                      'kendoTreeView',
+                      filterTreeView
+                    )
+                  "
+                  placeholder="{{ filterInputPlaceHolder }}"
+                />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+              <br />
+              <mat-label
+                >{{ labelGroupAtt }}
+                <i class="fas fa-table"></i>
+                <span> {{ olapCubeChoosen.olapCubeDimensions.length }}</span>
+              </mat-label>
+              <br />
+              <div class="form-group-treeview">
+                <div id="treeview"></div>
+              </div>
+            </div>
+            <div class="col-sm"><!--One of three columns--></div>
+          </div>
+          <br />
+          <br />
+          <div class="row">
+            <div class="col-sm">
+              <div class="input-group rounded-listKpiCalc">
+                <input
+                  type="search"
+                  class="form-control rounded"
+                  aria-label="Search"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="filterListBoxRows"
+                  (input)="
+                    applyFilterComponent(
+                      'listRows',
+                      'kendoListBox',
+                      filterListBoxRows
+                    )
+                  "
+                  placeholder="{{ filterInputPlaceHolder }}"
+                />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+              <span
+                *ngIf="controlNumberRow"
+                class="k-widget k-tooltip k-tooltip-info notif-inf"
+                data-for="kpiPreviousSteps"
+                role="alert"
+              >
+                <span class="k-icon k-i-info"> </span>
+                {{ messageErrorNumberItemInRow }}
+              </span>
+              <span
+                *ngIf="controlValidationRowSelected"
+                class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+                data-for="kpiPreviousSteps"
+                role="alert"
+              >
+                <span class="k-icon k-i-warning"> </span>
+                {{ messageErrorValidationRowSelected }}
+              </span>
+              <br />
+              <mat-label
+                >{{ labelRow }}
+                <i class="fa fa-th"></i>
+                {{ nbRowsDropped }}
+              </mat-label>
+              <br />
+              <div class="form-group">
+                <div id="listRows"></div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group rounded-listKpiCalc">
+                <input
+                  type="search"
+                  class="form-control rounded"
+                  aria-label="Search"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="filterListBoxColum"
+                  (input)="
+                    applyFilterComponent(
+                      'listColum',
+                      'kendoListBox',
+                      filterListBoxColum
+                    )
+                  "
+                  placeholder="{{ filterInputPlaceHolder }}"
+                />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+              <span
+                *ngIf="controlNumberCol"
+                class="k-widget k-tooltip k-tooltip-info notif-inf"
+                data-for="kpiPreviousSteps"
+                role="alert"
+              >
+                <span class="k-icon k-i-info"> </span>
+                {{ messageErrorNumberItemInCol }}
+              </span>
+              <br />
+              <mat-label
+                >{{ labelColum }}
+                <i class="fas fa-columns"></i>
+                {{ nbColsDropped }}
+              </mat-label>
+              <br />
+              <div class="form-group">
+                <div id="listColum"></div>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="input-group rounded-treeview">
+                <input
+                  type="search"
+                  class="form-control rounded"
+                  aria-label="Search"
+                  aria-describedby="search-addon"
+                  [ngModelOptions]="{ standalone: true }"
+                  [(ngModel)]="filterTreeViewDimFilter"
+                  (input)="
+                    applyFilterComponent(
+                      'treeviewFiltAtt',
+                      'kendoTreeView',
+                      filterTreeViewDimFilter
+                    )
+                  "
+                  placeholder="{{ filterInputPlaceHolder }}"
+                />
+                <span class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search"></i>
+                </span>
+              </div>
+              <br />
+              <div *ngIf="loadingFilter" class="spinner-text">
+                <div class="spinner-border spinner-border-sm"></div>
+                <span>{{ loadingFilterMsg }}</span>
+              </div>
+              <mat-label class="lbl-filter"
+                >{{ labelFilter }}
+                <i class="fas fa-filter"></i>
+                {{ nbFilterDropped }}
+              </mat-label>
+              &nbsp;&nbsp;&nbsp;
+              <button class="btn-secondary btn-xs custom-filter" (click)="customFilterItems()">custom filter</button>
+              <br>
+              <div class="toolbox-container">
+                <button
+                  mat-fab
+                  color="primary"
+                  aria-label="Example icon button with a delete icon"
+                  (click)="removeFilterNodes()"
+                  class="tree-view-trash-icon"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <div id="treeviewFiltAtt" class="myTree"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              <!--One of three columns-->
+            </div>
+            <div class="col-sm">
+              <button
+                (click)="DisplayReport()"
+                class="btn btn-secondary btn-sm grey-button"
+              >
+                {{ buttonTextDisplayReport }}
+                <mat-icon>dashboard</mat-icon>
+              </button>
+            </div>
+            <div class="col-sm">
+              <!--One of three columns-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer">
+        {{ cardTitleFooter }}
+      </div>
+    </div>
+    <!-- /.card -->
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<div id="dialog"></div>
+<div id="dialogContent" style="display: none">
+  <h3>{{ confirmDialogTitle }}</h3>
+  <!-- <button class="k-button" id="closeButton">Close</button>-->
+</div>
+
+<div id="dialog-filter-column" class="display-add">
+  <br />
+  <div class="container">
+    <div class="row">
+          <app-pagination [length]="matPaginatorLength " [pageSize]="1000" (pageChanged)="handlePageColumn($event)" [isPaginatorDiabled]="isPaginatorDiabled"></app-pagination>
+    </div>
+    <br>
+    <div class="row">
+
+      <div class="col">
+        <span
+        *ngIf="ctrlValidNoticeColNumber"
+        class="k-widget k-tooltip k-tooltip-info notif-inf"
+        data-for="kpiPreviousSteps"
+        role="alert"
+      >
+        <span class="k-icon k-i-info"> </span>
+        {{  NoticeColNumber }}
+      </span>
+        <div class="input-group rounded-listFiltered-Colum">
+          <input
+            type="search"
+            class="form-control rounded"
+            aria-label="Search"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="filterListFilteredBoxColum"
+            (input)="
+              applyGenFilterComponent(
+                'list-filtered-column',
+                'kendoListBox',
+                filterListFilteredBoxColum,
+                'cleanVal'
+              )
+            "
+            placeholder="{{ filterInputPlaceHolder }}"
+          />
+          <span class="input-group-text border-0" id="search-addon">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <div *ngIf="loadingAttCol" class="spinner-text">
+          <div class="spinner-border spinner-border-sm"></div>
+          <span> {{ loadingColMsg }}</span>
+        </div>
+        <br />
+        <mat-label
+          >{{ labelColum }}
+          <i class="fas fa-columns"></i>
+          {{ nbColumnReport }}
+        </mat-label>
+        &nbsp; &nbsp; &nbsp;
+        <div class="icon-container">
+        <mat-label><i class="fas fa-arrow-up remove-All" title="Select All" (click)="selectAllListBox('list-filtered-column')"></i></mat-label>
+        &nbsp; &nbsp;
+        <mat-label><i class="fas fa-arrow-down remove-All" title="Unselect All" (click)="UnselectAllListBox('list-filtered-column')"></i></mat-label>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <span
+        *ngIf="emptySelectedColVal"
+        class="k-widget k-tooltip k-tooltip-info notif-inf"
+        data-for="kpiPreviousSteps"
+        role="alert"
+      >
+        <span class="k-icon k-i-info"> </span>
+        {{  mesgEmptySelectedCol }}
+      </span>
+      <span
+      *ngIf="ctrlValidNumbColValFilt"
+      class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+      data-for="kpiPreviousSteps"
+      role="alert"
+    >
+      <span class="k-icon k-i-warning"> </span>
+      {{msgErrValidNbColFilt}}
+    </span>
+        </div>
+        <div class="form-group">
+          <select id="list-filtered-column"></select>
+          <mat-icon class="transfert-item" (click)="transferItem()"
+            >arrow_forward</mat-icon
+          >
+          <!-- Change 'arrow_forward' to the desired icon name -->
+        </div>
+      </div>
+      <div class="col">
+        <div class="input-group rounded-listFiltered-Colum">
+          <input
+            type="search"
+            class="form-control rounded"
+            aria-label="Search"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="filtListResFiltBoxCol"
+            (input)="
+              applyGenFilterComponent(
+                'list-result-filtered-column',
+                'kendoListBox',
+                filtListResFiltBoxCol,
+                'cleanVal'
+              )
+            "
+            placeholder="{{ filterInputPlaceHolder }}"
+          />
+          <span class="input-group-text border-0" id="search-addon">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <br />
+        <mat-label
+          >{{labelFiltResColum }}
+          <i class="fas fa-filter filter-icon"></i>
+          {{  nbFilteredCol  }}
+        </mat-label> &nbsp; &nbsp; &nbsp;
+        <div class="icon-container">
+        <mat-label><i class="fas fa-trash remove-All" title="Remove All" (click)="emptyListBox()"></i></mat-label>
+        &nbsp;
+        <mat-label><i class="fas fa-arrow-up remove-All" title="Select All" (click)="selectAllListBox('list-result-filtered-column')"></i></mat-label>
+        &nbsp;
+        <mat-label><i class="fas fa-arrow-down remove-All" title="Unselect All" (click)="UnselectAllListBox('list-result-filtered-column')"></i></mat-label>
+      </div>
+        <div class="form-group">
+          <select id="list-result-filtered-column"></select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col"></div>
+      <div class="col">
+        <span
+        *ngIf="ctrlValidEmptyColFilt"
+        class="k-widget k-tooltip k-tooltip-validation k-invalid-msg"
+        data-for="kpiPreviousSteps"
+        role="alert"
+        >
+        <span class="k-icon k-i-warning"> </span>
+        {{ msgErrValidEmptyColFilt}}
+        </span>
+      </div>
+      <div class="col"></div>
+
+    </div>
+  </div>
+  <div
+    class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+    role="toolbar"
+  >
+    <button
+      id="addButton"
+      (click)="visualizeReport()"
+      class="k-button k-primary saveBtn"
+      tabindex="0"
+    >
+      Visualize Report
+      <i class="fas fa-check"></i>
+    </button>
+    <button
+      id="cancelButton"
+      (click)="cancelDialog('dialog-filter-column')"
+      class="k-button"
+      tabindex="0"
+    >
+      Cancel
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+
+
+<div id="dialog-filter-items" class="display-add">
+  <br />
+<div class="container">
+
+    <app-pagination [length]="matPaginatorLength " [pageSize]="1000" (pageChanged)="handlePageFilter($event)" [isPaginatorDiabled]="isPaginatorDiabled"></app-pagination>
+
+  <br>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col">
+      <app-alert-error [ctrlValidDisplay]="ctrValdCutomfilter" [msgErrValid]="msgErrorFilterItems"
+        [classAlert]="classAlert" [classWarning]="classWarning"></app-alert-error>
+
+      <div *ngIf="loadingAttFilterItems" class="spinner-text">
+        <div class="spinner-border spinner-border-sm"></div>
+        <span> {{ loadingColMsg }}</span>
+      </div>
+      <br />
+      <div class="input-group rounded-listFiltered-Filter-Items">
+        <input
+        matInput
+        [(ngModel)]="filterText"
+        (ngModelChange)="applyFilter()"
+        type="search"
+        class="form-control rounded"
+        aria-label="Search"
+        aria-describedby="search-addon"
+        placeholder={{placeHolderFilter}}
+      />
+        <span class="input-group-text border-0" id="search-addon">
+          <i class="fas fa-search"></i>
+        </span>
+      </div>
+      <br />
+      <mat-label
+        >{{  labelFilterItems }}
+        <i class="fas fa-columns"></i>
+        {{nbFilterItemsReport }}
+      </mat-label>
+      <mat-label>
+        / items checked: {{ getSelectedItemCount() }}
+      </mat-label>
+      <div class="checkbox-list-container">
+        <section class="example-section">
+          <span class="example-list-section">
+            <mat-checkbox class="example-margin"
+                          [checked]="allChecked"
+                          [indeterminate]="someChecked()"
+                          (change)="setAll($event.checked)" >
+              {{checkAllItems}}
+            </mat-checkbox>
+          </span>
+          <span class="example-list-section">
+            <ul>
+              <li *ngFor="let item of filteredItemslist">
+                <mat-checkbox [(ngModel)]="item.selected "
+                              (ngModelChange)="updateAllChecked()" color="primary"
+                              >
+                  {{item.text}}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </span>
+        </section>
+      </div>
+    </div>
+    <div class="col">
+
+    </div>
+
+  </div>
+
+</div>
+<br>
+<br>
+  <div
+    class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+    role="toolbar"
+  >
+    <button
+      id="addButton"
+      (click)="resultFilterItems()"
+      class="k-button k-primary "
+      tabindex="0"
+    >
+      Apply Filter
+      <i class="fas fa-check"></i>
+    </button>
+    <button
+      id="cancelButton"
+      (click)="cancelWindow('dialog-filter-items')"
+      class="k-button"
+      tabindex="0"
+    >
+      Cancel
+      <i class="fas fa-times"></i>
+    </button>
+
+  </div>
+</div>

@@ -1,0 +1,468 @@
+<!-- Main content -->
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">Data Visualization</h3>
+
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="">
+            <i class="fas fa-smile"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body" id="destination-container">
+        <div id="windowAdvancedReport">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm"> {{labelAtt}}</div>
+              <div class="col-sm"><mat-label class="label-level">
+                {{labelRecl}}
+
+              </mat-label>
+             </div>
+             <br>
+              <div class="col-sm"></div>
+            </div>
+            <div class="row">
+              <div class="col-sm">
+            </div>
+              <div class="col-sm">
+
+                <ul id="select-period">
+                  <li>level1</li>
+                  <li>level2</li>
+                  <li>level3</li>
+                </ul>
+              </div>
+              <div class="col-sm"></div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm">
+                  <app-input-filter [filterInput]="filterListFirstLevel" [compId]="'listFilterFirstLevel'"
+                  [compType]="'kendoListBox'" [fieldText]="'position'"
+                 [nbItems]="nbFirstLevel" [remSelUnselClass]="true"  [widthSearchInput]="'200px'"
+                  ></app-input-filter>
+                </div>
+              <div class="col-sm">
+                <app-input-filter [filterInput]="filterListSecondLevel" [compId]="'listFilterSecondLevel'"
+                [compType]="'kendoListBox'" [fieldText]="'position'"
+                [nbItems]="nbSecondLevel"[remSelUnselClass]="true" [widthSearchInput]="'200px'"
+                ></app-input-filter>
+              </div>
+              <div class="col-sm">
+                <app-input-filter [filterInput]="filterListThirdLevel" [compId]="'listFilterThirdLevel'"
+                [compType]="'kendoListBox'" [fieldText]="'position'"
+                [nbItems]="nbThirdLevel"[remSelUnselClass]="true" [widthSearchInput]="'200px'"
+                ></app-input-filter>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm"></div>
+            <div class="col-sm">
+              <button
+                id="configReportBtn"
+                class="btn btn-block bg-gradient-secondary btn-xs adv-rep"
+                (click)="clickRepButton()"
+              >
+                <i class="fa fa-filter"></i> Filter By Category
+
+              </button>
+            </div>
+            <div class="col-sm">
+              <button (click)="exportToPdf()" class="btn btn-block btn-secondary exp-pdf">
+                <i class="fa fa-file-pdf"></i> Export to PDF
+              </button>
+            </div>
+          </div>
+          <br />
+          <div class="row">
+            <div class="col-sm">
+
+              <app-alert-error [ctrlValidDisplay]="controlNumberKpi" [msgErrValid]="messageErrorKpi"
+              [classAlert]="classAlert" [classWarning]="classWarning"></app-alert-error>
+
+                <app-input-filter [filterInput]="filterListBoxKpi" [compId]="'listBoxKpi'"
+                [compType]="'kendoListBox'" [fieldText]="'text'"
+                [labelText]="labelKPI" [nbItems]="this.olapCubeChoosen.measCalChoosen.length"
+                [classIconLabel]="'fa fa-tachometer'" [widthSearchInput]="'250px'"></app-input-filter>
+
+            </div>
+            <div class="col-sm">
+              <app-input-filter [filterInput]="filterListBoxCateg" [compId]="'listBoxHirarchyRows'"
+                [compType]="'kendoListBox'" [fieldText]="'text'"
+                [labelText]="labelCategory"
+                [classIconLabel]="'fa-solid fa-bullseye'"  [widthSearchInput]="'200px'"></app-input-filter>
+
+              <app-alert-error [ctrlValidDisplay]="controlAdvancedReportLevel" [msgErrValid]="messageErrorAdvancedReportLevel"
+              [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+            </div>
+
+            <div class="col-sm">
+              <app-input-filter [filterInput]="filterListBoxHirarchyRows" [compId]="'listBoxCharts'"
+              [compType]="'kendoListBox'" [fieldText]="'text'"
+              [labelText]="labelChart"[nbItems]="nbChart"  [widthSearchInput]="'250px'"
+              ></app-input-filter>
+            </div>
+          </div>
+        </div>
+        <app-alert-error [ctrlValidDisplay]="controlErrLengthData" [msgErrValid]="mesErrLengthData"
+         [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+        <div Window class="charts" id="charts">
+
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer"></div>
+    </div>
+    <!-- /.card -->
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<!-- /.content -->
+<div class="container">
+  <div class="row">
+    <div class="col">
+    </div>
+    <div class="col">
+      <app-alert-error [ctrlValidDisplay]="controlDisableBtn" [msgErrValid]="messageErrorReport"
+      [classAlert]="classAlert" [classWarning]="classWarning"></app-alert-error>
+    </div>
+    <div class="col">
+      <div class="arrow">
+        <mat-label><i class="fas fa-arrow-up select-All" title="Select All only Level 1 hierarchy data" (click)="selectAllListBox()"></i></mat-label>
+        &nbsp;&nbsp;
+        <mat-label><i class="fas fa-arrow-down select-All" title="Unselect All only Level 1 hierarchy data" (click)="unSelectAllListBox()"></i></mat-label>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="treelist2"></div>
+<!-- Delete Confirmation Dialog -->
+<div id="SaveRportDialog" class="display-add">
+  <br>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="report-name">
+            <mat-label class="labelFormulas">Report Name</mat-label>
+            <input
+              matInput
+              placeholder="Make Report Name explicative..."
+              [(ngModel)]="reportNameInput"
+              class="inputReport"
+            />
+          </mat-form-field>
+        <app-alert-error [ctrlValidDisplay]="ctrlValdRepName" [msgErrValid]="msgErrorValdRepName"
+        [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+        </div>
+        <div class="col">
+          <mat-form-field class="interpReport">
+            <mat-label>Report Interpretation</mat-label>
+            <textarea matInput placeholder="Interp Rep..."
+            [(ngModel)]="reportInterpInput"
+              class="inputReport"
+              id="interp-report"
+            ></textarea>
+          </mat-form-field>
+        <app-alert-error [ctrlValidDisplay]="ctrlValdRepInterp" [msgErrValid]=" msgErrorValdRepInterp"
+        [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-slide-toggle [(ngModel)]="isShareable" color="primary">Sharebale Report</mat-slide-toggle>
+
+        </div>
+      </div>
+      <div class="row">
+        <div class="col"></div>
+        <div class="col-6">
+          <br>
+          <app-alert-spinner [loadingSpinner]="loadingReport" [lblLoadingText]="lblLoadingSaveReport"> </app-alert-spinner>
+        </div>
+        <div class="col"></div>
+      </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div
+    class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+    role="toolbar"
+  >
+    <button id="confirmSaveReport"  class="k-button k-primary saveBtn"
+    tabindex="0"  (click)="saveReport()">  Save   <i class="fas fa-check"></i></button>
+    <button id="cancelSaveReport"   class="k-button" tabindex="0" (click)="cancelDialog('SaveRportDialog')">
+      Cancel  <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+<div id="SummaryReport" class="display-add">
+  <br>
+  <div  class="container" id="hhij">
+    <div class="row">
+      <div class="col">
+        <p>Data Source</p>
+        <ul>
+          <li>{{this.olapCubeChoosen.olapCubeName}}</li>
+        </ul>
+      </div>
+      <div class="col">
+
+        <p>KPI(s)</p>
+        <div class="input-group rounded-summary-list-kpi">
+          <input
+            type="search"
+            class="form-control rounded"
+            aria-label="Search"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="summaryFilterKpi"
+            (input)="
+              applyGenFilterComponent(
+                'list-summary-kpi',
+                'kendoListBox',
+                summaryFilterKpi,
+                'text'
+              )
+            "
+            placeholder="{{ filterInputPlaceHolder }}"
+          />
+          <span class="input-group-text border-0" id="search-addon">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <br>
+          <div class="form-group">
+          <select id="list-summary-kpi"></select>
+        </div>
+      </div>
+      <div class="col">
+        <p> Attribute in row </p>
+
+        <div id="treeview-summary-row"></div>
+
+      </div>
+
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <div *ngIf="olapCubeChoosen.nbColInQuery!=0">
+          <p>Column value combinated with kpi</p>
+        <div class="input-group  rounded-summary-tree-view-column-val">
+          <input
+            type="search"
+            class="form-control rounded"
+            aria-label="Search"
+            [ngModelOptions]="{ standalone: true }"
+            [(ngModel)]="summaryFilterColumVal"
+            (input)="
+              applyGenFilterComponent(
+                'treeview-summary-col',
+                'kendoTreeView',
+                summaryFilterColumVal,
+                'text'
+              )
+            "
+            placeholder="{{ filterInputPlaceHolder }}"
+          />
+          <span class="input-group-text border-0" id="search-addon">
+            <i class="fas fa-search"></i>
+          </span>
+        </div>
+        <br>
+        <div id="treeview-summary-col"></div>
+
+        </div>
+
+      </div>
+
+      <div class="col">
+        <div *ngIf="olapCubeChoosen.attribFiltFormatReport!=''">
+            <p> Attribute in filter </p>
+            <div class="input-group  rounded-summary-tree-view-column-val">
+              <input
+                type="search"
+                class="form-control rounded"
+                aria-label="Search"
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="summaryFilterItems"
+                (input)="
+                  applyGenFilterComponent(
+                    'treeview-summary-filter',
+                    'kendoTreeView',
+                    summaryFilterItems,
+                    'text'
+                  )
+                "
+                placeholder="{{ filterInputPlaceHolder }}"
+              />
+              <span class="input-group-text border-0" id="search-addon">
+                <i class="fas fa-search"></i>
+              </span>
+            </div>
+            <br>
+            <div id="treeview-summary-filter"></div>
+        </div>
+
+      </div>
+      <div class="col">
+        <div *ngIf="olapCubeChoosen.InterpretationReport!=''">
+          <!--<p>Interpretation Report</p>
+          <div id="inter-report">
+            {{this.olapCubeChoosen.InterpretationReport}}
+          </div>-->
+          <mat-form-field class="interpReport">
+            <mat-label>Interpretation Report</mat-label>
+            <textarea matInput placeholder="Interp Report..."
+            [(ngModel)]="this.olapCubeChoosen.InterpretationReport"
+              class="inputGroup"
+              id="interp-report"
+              readonly
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+  <div #myDivElement id="hhij"  [style.display]="'none'">
+    <h2> <b>report  Parameters</b> </h2>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <p><b>A/. </b>Data Source</p>
+          <ul>
+            <li>{{this.olapCubeChoosen.olapCubeName}}</li>
+          </ul>
+        </div>
+        <div class="col">
+          <p><b>B/. </b>KPI(s)</p>
+          <br>
+          <ul>
+            <li *ngFor="let item of this.listKpiPdf">{{ item}}</li>
+          </ul>
+        </div>
+        <div class="col">
+          <p><b>C/. </b> Attribute in row </p>
+          <ul *ngFor="let item of this.listRowInPdf; let i = index">
+            <p><b>*. </b>{{ item.text}}</p>
+              <li >{{ item.items[0].text}}</li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col">
+          <div *ngIf="olapCubeChoosen.nbColInQuery!=0">
+            <p><b>D/. </b>Column value combinated with kpi</p>
+            <ul *ngFor="let item of this.listcolPdf; let i = index">
+              <p><b>*. </b>{{ item.text}}</p>
+              <li >{{ item.items[0].text}}</li>
+              <ul *ngFor="let itemchild of item.items[0].items; let j = index">
+                <li >{{ j + 1 }}.{{ itemchild.text}}</li>
+              </ul>
+            </ul>
+          </div>
+
+        </div>
+        <div class="col">
+          <div *ngIf="olapCubeChoosen.attribFiltFormatReport!='' ">
+            <p><b>E/. </b>Filter attribute</p>
+            <ul *ngFor="let item of this.listFilterPdf; let i = index">
+              <p><b>*. </b>{{ item.text}}</p>
+              <li >{{ item.items[0].text}}</li>
+              <ul *ngFor="let itemchild of item.items[0].items; let j = index">
+                <li >{{ j + 1 }}.{{ itemchild.text}}</li>
+              </ul>
+            </ul>
+          </div>
+
+        </div>
+        <div class="col">
+          <div *ngIf="olapCubeChoosen.InterpretationReport!='' ">
+            <p><b>F/. </b>Report interpretation</p>
+              <p><b>*. </b>{{ olapCubeChoosen.InterpretationReport}}</p>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div id="dialog-options-charts">
+        <br />
+    <div class="container">
+      <br>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="example-full-width">
+            <mat-label class="labelFormulas">Title chart</mat-label>
+            <input
+              matInput
+              placeholder="Make title report explicative..."
+              [(ngModel)]="titleChartEditedInput"
+              class="inputReport"
+            />
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-slide-toggle [(ngModel)]="isShowValChart" color="primary">Show/hide values on chart </mat-slide-toggle>
+
+        </div>
+
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-label class="olap-label"> type chart </mat-label>
+          <br />
+          <div class="form-group">
+            <select id="typee-chart" name="typee-chart"></select>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+    <br>
+    <br>
+
+    <div
+    class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+    role="toolbar"
+  >
+    <button class="k-button k-primary"
+    tabindex="0"  (click)="applyUpdateChart()">Apply<i class="fas fa-check"></i></button>
+    <button  class="k-button" tabindex="0" (click)="cancelWindow('dialog-options-charts')">
+      Cancel  <i class="fas fa-times"></i>
+    </button>
+  </div>
+</div>
+

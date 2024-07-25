@@ -1,0 +1,36 @@
+.spinner-data{
+  width: 20px !important;
+  height: 20px !important;
+}
+/*.spinner-text{
+  font-size: large !important;
+}*/
+.display-add{
+  display: contents;
+}
+.action-btn-grid{
+  display: none;
+}
+.report-name{
+  width: 350px;
+}
+.inputReport{
+  height: 20px;
+  font-size: small !important;
+}
+.interpReport{
+  width: 500px;
+  height: 250px;
+}
+#interp-report{
+  width: 480px;
+  height: 200px;
+}
+.k-grid-pdf{
+  margin-left: 25px ;
+}
+.k-grid-excel{
+  margin-right: 30px ;
+}
+
+

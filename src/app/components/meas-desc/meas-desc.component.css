@@ -1,0 +1,27 @@
+.display-add{
+  display: contents;
+}
+.area{
+  width: 450px;
+  height: 120px;
+}
+#interp-Kpi{
+  width: 480px;
+  height: 200px;
+}
+.nameKpi{
+  width: 350px;
+}
+
+.interpKpi{
+  width: 500px;
+  height: 250px;
+}
+#interp-Kpi{
+  width: 480px;
+  height: 200px;
+}
+.dis-data{
+  font-size: medium;
+  width: 200px ;
+}

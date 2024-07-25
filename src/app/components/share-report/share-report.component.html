@@ -1,0 +1,87 @@
+<section class="content">
+  <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">Sharebility Reports</h3>
+
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="">
+            <i class="fas fa-smile"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body" id="shareReport-card-body">
+        <app-date-filter-period [startDate]="startDate" [endDate]="endDate"  [idDatePickerStartDate]="'date-pick-start-shared'"
+        [idDatePickerEndDate]="'date-pick-end-shared'"  [idBtn]="'btn-di-shared-rep'"> </app-date-filter-period>
+        <br>
+        <br>
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <app-input-filter [filterInput]="filterTextAllUsers" [compId]="'allUsers'"
+              [compType]="'kendoListBox'" [fieldText]="'userName'"
+             [remSelUnselClass]="false"  [widthSearchInput]="'200px'"
+              ></app-input-filter>
+
+            </div>
+            <div class="col">
+              <app-input-filter [filterInput]="filterTextSharedUsers" [compId]="'usersToShare'"
+              [compType]="'kendoListBox'" [fieldText]="'userName'"
+             [remSelUnselClass]="false"  [widthSearchInput]="'200px'"
+              ></app-input-filter>
+              <app-alert-error [ctrlValidDisplay]="controlValidationUser" [msgErrValid]=" messageErrorValidSharedUsers"
+              [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+            </div>
+            <div class="col">
+              <br /><br /><br /><br /><br /><br /><br />
+              <div class="form-btn">
+                <button
+                  (click)="shareReport()"
+                  class="btn btn-block bg-gradient-secondary btn-sm adv-rep"
+                >
+                  <i class="fa-solid fa-share"></i>
+                  {{ btnShareReport }}
+                </button>
+                <br>
+                <br>
+                <app-alert-spinner [loadingSpinner]="loadingSharebEvent" [lblLoadingText]="lblloadinEventShareb" [fontSize]="'meduim'">
+                </app-alert-spinner>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer"></div>
+    </div>
+    <!-- /.card -->
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+      <app-alert-spinner [loadingSpinner]="loadingGridShareReports" [lblLoadingText]="lblloadingGrid" [fontSize]="'large'">
+      </app-alert-spinner>
+      <app-alert-error [ctrlValidDisplay]="controlValidationReport" [msgErrValid]="messageErrorValidGrid"
+      [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+    </div>
+    <div class="col"></div>
+
+  </div>
+</div>
+<div id="gridReportsSharebale"></div>

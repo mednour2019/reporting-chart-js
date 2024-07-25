@@ -1,0 +1,70 @@
+<div class="container">
+  <div class="row">
+    <div class="col"></div>
+    <div class="col-6">
+      <app-alert-spinner [loadingSpinner]="loadingGridCube" [lblLoadingText]="lblloadingGridCube" [fontSize]="'large'">
+      </app-alert-spinner>
+    </div>
+    <div class="col"></div>
+
+  </div>
+</div>
+<div id="gridcube-Desc"></div>
+<div id="updateDialogCube" class="display-add">
+  <br>
+  <div class="container">
+   <div class="row">
+    <div class="col">
+      <mat-form-field class="cube-name">
+        <mat-label class="labelFormulas">Data source Name</mat-label>
+        <input
+          matInput
+          placeholder="Make Data source explicative..."
+          [(ngModel)]="CubeName"
+          [readonly]="true"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="interpCube">
+        <mat-label>DataSource Description</mat-label>
+        <textarea matInput placeholder="DataSource Desc..."
+        [(ngModel)]="CubeDescription"
+          class="inputGroup"
+          id="interp-Cube"
+        ></textarea>
+      </mat-form-field>
+   </div>
+   <div class="col-8">
+    <app-alert-spinner [loadingSpinner]="loadingSaveCubeDesc" [lblLoadingText]="lblLoadingSaveDesCube" [fontSize]="'meduim'">
+    </app-alert-spinner>
+
+   </div>
+  </div>
+    <br />
+    <br />
+    <div
+      class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+      role="toolbar"
+    >
+      <button
+        id="addButton"
+        (click)="updateRecord()"
+        class="k-button k-primary saveBtn"
+        tabindex="0"
+      >
+        Save
+        <i class="fas fa-check"></i>
+      </button>
+      <button
+        id="cancelButton"
+        (click)="cancelDialog('updateDialogCube')"
+        class="k-button"
+        tabindex="0"
+      >
+        Cancel
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+</div>

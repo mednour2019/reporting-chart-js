@@ -1,0 +1,112 @@
+<section class="content">
+  <div class="container-fluid">
+    <!-- SELECT2 EXAMPLE -->
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">Groups description</h3>
+        <div class="card-tools">
+          <button
+            type="button"
+            class="btn btn-tool"
+            data-card-widget="collapse"
+          >
+            <i class="fas fa-minus"></i>
+          </button>
+          <button type="button" class="btn btn-tool" data-card-widget="">
+            <i class="fas fa-smile"></i>
+          </button>
+        </div>
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body" id="dimension-card-body">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <app-input-filter [filterInput]="filterListBoxCubeDim" [compId]="'listBDataMart'"
+              [compType]="'kendoListBox'" [fieldText]="'cubeName'"
+              [labelText]="lblDropdownCube" [widthSearchInput]="'300px'"
+              [classIconLabel]="'fas fa-database'"></app-input-filter>
+            </div>
+            <div class="col">
+              <button (click)="displayDimension()" class="btn btn-block btn-secondary dis-data">
+                Display Groups
+             </button>
+             <br>
+             <br>
+             <br>
+             <br>
+             <app-alert-error [ctrlValidDisplay]="controlValidationServerSelected" [msgErrValid]=" messageErrorValidationServerSelected"
+             [classAlert]="classAlertError" [classWarning]="classWarningError"></app-alert-error>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.card-body -->
+      <div class="card-footer"></div>
+    </div>
+    <!-- /.card -->
+
+    <!-- /.row -->
+  </div>
+  <!-- /.container-fluid -->
+</section>
+<br>
+<div id="gridDim-Desc"></div>
+
+<div id="updateDialog" class="display-add">
+  <br>
+  <div class="container">
+   <div class="row">
+    <div class="col">
+      <mat-form-field class="dim-name">
+        <mat-label class="labelFormulas">Group Name</mat-label>
+        <input
+          matInput
+          placeholder="Make title report explicative..."
+          [(ngModel)]="DimName"
+          [readonly]="true"
+        />
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field class="interpDim">
+        <mat-label>Group Description</mat-label>
+        <textarea matInput placeholder="Group Desc..."
+        [(ngModel)]="DimDescription"
+          class="inputGroup"
+          id="interp-Dim"
+        ></textarea>
+      </mat-form-field>
+   </div>
+   <div class="col-8">
+    <app-alert-spinner [loadingSpinner]="loadingSaveDimDesc" [lblLoadingText]="lblLoadingSaveDesDim" [fontSize]="'meduim'">
+    </app-alert-spinner>
+   </div>
+  </div>
+    <br />
+    <br />
+    <div
+      class="k-dialog-buttongroup k-dialog-button-layout-stretched"
+      role="toolbar"
+    >
+      <button
+        id="addButton"
+        (click)="updateRecord()"
+        class="k-button k-primary saveBtn"
+        tabindex="0"
+      >
+        Save
+        <i class="fas fa-check"></i>
+      </button>
+      <button
+        id="cancelButton"
+        (click)="cancelDialog('updateDialog')"
+        class="k-button"
+        tabindex="0"
+      >
+        Cancel
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+  </div>
+</div>
